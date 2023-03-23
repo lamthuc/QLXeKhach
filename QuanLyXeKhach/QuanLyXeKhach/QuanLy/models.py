@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from ckeditor.fields import RichTextField
 # Create your models here.
 
 class User(AbstractUser):
@@ -28,6 +29,8 @@ class ChuyenXe(models.Model):
     gio_den = models.DateTimeField()
     gia_ve = models.FloatField(default=0)
     so_luong_ve = models.IntegerField(default=0)
+    image = models.ImageField(upload_to="QuanLy/%Y/%m", null= True)
+
 
 class VeXe(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='vexe')

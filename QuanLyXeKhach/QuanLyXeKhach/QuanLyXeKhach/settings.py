@@ -36,7 +36,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'QuanLy.apps.QuanlyConfig',
+    'ckeditor',
+    'ckeditor_uploader',
+    'rest_framework',
+    'drf_yasg'
 ]
+CKEDITOR_UPLOAD_PATH = "ckeditor/QuanLy"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -83,6 +88,7 @@ DATABASES = {
     }
 }
 AUTH_USER_MODEL = "QuanLy.User"
+MEDIA_ROOT = '%s/QuanLy/static/' % BASE_DIR
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
