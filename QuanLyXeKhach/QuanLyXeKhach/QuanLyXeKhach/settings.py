@@ -87,7 +87,9 @@ DATABASES = {
         'HOST': ''
     }
 }
+
 AUTH_USER_MODEL = "QuanLy.User"
+
 MEDIA_ROOT = '%s/QuanLy/static/' % BASE_DIR
 
 # Password validation
