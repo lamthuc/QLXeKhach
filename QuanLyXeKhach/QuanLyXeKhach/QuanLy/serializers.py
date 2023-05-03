@@ -1,7 +1,17 @@
 from rest_framework import serializers
-from .models import  ChuyenXe
+from .models import Coach, Route
 
-class ChuyenXeSerializers(serializers.ModelSerializer):
+class CoachSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ChuyenXe
-        fields = ['tuyenxe', 'nhaxe']
+        model = Coach
+        fields = '__all__'
+
+# # class NhaXeSerializers(serializers.ModelSerializer):
+# #     class Meta:
+# #         model = NhaXe
+# #         fields = ['name', 'address', 'avatar']
+#
+# class TuyenXeSerializers(serializers.ModelSerializer):
+#     class Meta:
+#         model = Route
+#         fields = ['']
