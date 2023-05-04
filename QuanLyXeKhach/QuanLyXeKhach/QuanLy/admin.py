@@ -4,9 +4,9 @@ from django import forms
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 class AdminCoach(admin.ModelAdmin):
-    list_display = ['tuyenxe', 'nhaxe', 'gio_den', 'gio_di']
-    search_fields = ['tuyenxe', 'nhaxe']
-    list_filter =  ['tuyenxe', 'nhaxe']
+    list_display = []
+    search_fields = []
+    list_filter =  []
 
 class FormCoach(forms.ModelForm):
     description = forms.CharField(widget=CKEditorUploadingWidget)
