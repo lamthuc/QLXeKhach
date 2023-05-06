@@ -46,7 +46,11 @@ class SeatDetail(models.Model):
     modified_date = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
 
-
+class BusCompany(models.Model):
+    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=200)
+    phone_number = models.CharField(max_length=20)
+    email = models.EmailField()
 class Ticket(models.Model):
     seat_detail = models.ForeignKey(SeatDetail, on_delete=models.CASCADE)
     start_time = models.DateTimeField()
