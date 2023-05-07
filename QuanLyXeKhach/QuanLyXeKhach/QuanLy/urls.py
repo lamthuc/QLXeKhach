@@ -5,10 +5,7 @@ from .views import RouteSearchView, RecommendedRoutesView, CoachSerializer, Regi
 from . import views
 
 r = routers.DefaultRouter()
-# r.register('coach', views.CoachSerializer, basename='coach')
-
-# r.register('tuyenxe', views.TuyenXeSerializers, basename='TuyenXe')
-# r.register('nhaxe', views.NhaXeSerializers, basename='NhaXe')
+r.register('users', views.UserViewSet)
 
 urlpatterns = [
     path('', include(r.urls)),
@@ -40,4 +37,5 @@ urlpatterns = [
     path('bus-companies/<int:bus_company_id>/reviews/create/', ReviewCreate.as_view(), name='review-create'),
     # Danh sách bài review
     path('bus-companies/<int:bus_company_id>/reviews/', ReviewList.as_view(), name='review-list'),
+    path('o/', include('oauth2_provider.urls',namespace='oauth2_provider'))
 ]

@@ -44,7 +44,13 @@ INSTALLED_APPS = [
     'oauth2_provider',
 ]
 
-CKEDITOR_UPLOAD_PATH = "ckeditor/QuanLy"
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    )
+}
+
+CKEDITOR_UPLOAD_PATH = "ckeditor/QuanLy/"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -54,9 +60,23 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'oauth2_provider.middleware.OAuth2TokenMiddleware'
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'oauth2_provider.backends.OAuth2Backend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+OAUTH2_PROVIDER = {
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 3600,
+    'REFRESH_TOKEN_EXPIRE_SECONDS': 86400,
+    'ROTATE_REFRESH_TOKEN': True,
+    'ROTATE_REFRESH_TOKENS': True,
+}
+
 ROOT_URLCONF = 'QuanLyXeKhach.urls'
+
+MEDIA_ROOT = '%s/QuanLy/static/' % BASE_DIR
 
 TEMPLATES = [
     {
@@ -80,7 +100,9 @@ WSGI_APPLICATION = 'QuanLyXeKhach.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 import pymysql
+
 pymysql.install_as_MySQLdb()
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -91,9 +113,10 @@ DATABASES = {
     }
 }
 
+
 AUTH_USER_MODEL = "QuanLy.User"
 
-MEDIA_ROOT = '%s/QuanLy/static/' % BASE_DIR
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -133,3 +156,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CLIENT_ID = 'KBLD7rqXJ88wVp4eXiQWaxsuqyRdhSqHwgTlgxmE'
+CLIENT_SECRET = 'pbkdf2_sha256$390000$K6BJnrNIwcjCMuIUcx2Dw0$Gui7IGqow+2A1weio00c8yLbKgvXY3qnBD0llK633w4='

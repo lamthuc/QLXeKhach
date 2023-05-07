@@ -4,11 +4,10 @@ from django import forms
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 class AdminCoach(admin.ModelAdmin):
-    list_display = []
-    search_fields = []
-    list_filter =  []
+    list_display = ["number_plate","driver","route","start_time","is_holiday"]
+    list_filter =  ["number_plate","driver","route","start_time"]
 
-class FormCoach(forms.ModelForm):
+class CoachForm (forms.ModelForm):
     description = forms.CharField(widget=CKEditorUploadingWidget)
     class Meta:
         model = Coach

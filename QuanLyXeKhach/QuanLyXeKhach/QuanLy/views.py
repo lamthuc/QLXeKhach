@@ -1,9 +1,8 @@
-from rest_framework import generics, permissions, status
+from rest_framework import generics, permissions, status, viewsets, parsers
 from rest_framework.response import Response
-from .models import Coach, Route, BusCompany, Delivery
-from .serializers import CoachSerializer, RouteSerializer, BusCompanySerializer, DeliverySerializer, ReviewSerializer
-from rest_framework .decorators import api_view
-from rest_framework import  viewsets
+from .models import Coach, Route, BusCompany, Delivery, User
+from .serializers import CoachSerializer, RouteSerializer, BusCompanySerializer, DeliverySerializer, ReviewSerializer, UserSerializer
+from rest_framework .decorators import api_view, action
 from rest_framework.permissions import IsAuthenticated
 
 class RouteListCreateAPIView(generics.ListCreateAPIView):
@@ -114,3 +113,24 @@ class DeliveryListCreateView(generics.ListCreateAPIView):
 class DeliveryDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Delivery.objects.all()
     serializer_class = DeliverySerializer
+
+class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
+    queryset = User.objects.filter(is_active=True)
+    serializer_class = UserSerializer
+    parser_classes = [parsers.MultiPartParser, ]
+
+    def get_permissions(self):
+        if self.action in ['current_user']:
+            return [permissions.IsAuthenticated()]
+
+        return [permissions.AllowAny()]
+
+    @action(methods=['get', 'put'], detail=False, url_path='current-user')
+    def current_user(self, request):
+        u = request.user
+        if request.method.__eq__('PUT'):
+            for k, v in request.data.items():
+                setattr(u, k, v)
+            u.save()
+
+        return Response(UserSerializer(u, context={'request': request}).data)
