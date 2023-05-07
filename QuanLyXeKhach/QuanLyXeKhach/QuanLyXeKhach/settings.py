@@ -40,8 +40,10 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'rest_framework',
-    'drf_yasg'
+    'drf_yasg',
+    'oauth2_provider',
 ]
+
 CKEDITOR_UPLOAD_PATH = "ckeditor/QuanLy"
 
 MIDDLEWARE = [

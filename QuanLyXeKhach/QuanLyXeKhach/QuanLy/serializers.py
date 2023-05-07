@@ -10,6 +10,7 @@ class BusCompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = BusCompany
         fields = '__all__'
+
 class RouteSerializer(serializers.ModelSerializer):
     bus_company = BusCompanySerializer()
 
@@ -21,6 +22,7 @@ class DeliverySerializer(serializers.ModelSerializer):
     class Meta:
         model = Delivery
         fields = '__all__'
+
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review

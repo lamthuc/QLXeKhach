@@ -3,6 +3,7 @@ from django.urls import path, re_path, include
 from rest_framework import routers
 from .views import RouteSearchView, RecommendedRoutesView, CoachSerializer, RegisterBusCompanyView, BusCompanyUpdateView, BusCompanyDetailView,BusCompanyRoutesView, BusCompanyCoachView, BusCompanyCreateRouteView, BusCompanyUpdateRouteView, DeliverySerializer, ReviewCreate, ReviewList
 from . import views
+
 r = routers.DefaultRouter()
 # r.register('coach', views.CoachSerializer, basename='coach')
 
@@ -10,6 +11,7 @@ r = routers.DefaultRouter()
 # r.register('nhaxe', views.NhaXeSerializers, basename='NhaXe')
 
 urlpatterns = [
+    path('', include(r.urls)),
     path('register/', RegisterBusCompanyView.as_view(), name='transport-company-register'),
     # Cập nhật thông tin nhà xe
     path('update/<int:pk>/', BusCompanyUpdateView.as_view(), name='transport-company-update'),
@@ -38,6 +40,4 @@ urlpatterns = [
     path('bus-companies/<int:bus_company_id>/reviews/create/', ReviewCreate.as_view(), name='review-create'),
     # Danh sách bài review
     path('bus-companies/<int:bus_company_id>/reviews/', ReviewList.as_view(), name='review-list'),
-    path('/', include(r.urls)),
-
 ]

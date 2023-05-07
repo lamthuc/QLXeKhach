@@ -16,6 +16,7 @@ class RouteRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Route.objects.all()
     serializer_class = RouteSerializer
     permission_classes = [permissions.IsAdminUser]
+
 class RouteSearchView(generics.ListAPIView):
     serializer_class = RouteSerializer
 
@@ -55,6 +56,7 @@ class RecommendedRoutesView(generics.ListAPIView):
           # Sort recommended routes by price
           recommended_routes.sort(key=lambda r: r.price)
           return recommended_routes
+
 class RegisterBusCompanyView(generics.CreateAPIView):
     serializer_class = BusCompanySerializer
 
@@ -104,6 +106,7 @@ class ReviewList(generics.ListAPIView):
     def get_queryset(self):
         bus_company_id = self.kwargs['transport_company_id']
         return Review.objects.filter(bus_company_id=bus_company_id)
+
 class DeliveryListCreateView(generics.ListCreateAPIView):
     queryset = Delivery.objects.all()
     serializer_class = DeliverySerializer
