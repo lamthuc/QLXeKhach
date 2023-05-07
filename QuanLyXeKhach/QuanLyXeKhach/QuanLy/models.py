@@ -29,7 +29,12 @@ class Coach(models.Model):
     start_time = models.DateTimeField(null=True)
     is_holiday = models.BooleanField(default=False)
 
-
+class Delivery(models.Model):
+    sender_name = models.CharField(max_length=100)
+    sender_address = models.CharField(max_length=200)
+    receiver_name = models.CharField(max_length=100)
+    receiver_address = models.CharField(max_length=200)
+    delivery_time = models.DateTimeField(null=True)
 
 class SeatDetail(models.Model):
     STATUS_CHOICES = [
@@ -51,6 +56,16 @@ class BusCompany(models.Model):
     address = models.CharField(max_length=200)
     phone_number = models.CharField(max_length=20)
     email = models.EmailField()
+
+class Review(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    bus_company = models.ForeignKey(BusCompany, on_delete=models.CASCADE, related_name='reviews')
+    rating = models.PositiveSmallIntegerField()
+    comment = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'bus_company')
 class Ticket(models.Model):
     seat_detail = models.ForeignKey(SeatDetail, on_delete=models.CASCADE)
     start_time = models.DateTimeField()

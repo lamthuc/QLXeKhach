@@ -1,9 +1,10 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from .models import Coach, Route, BusCompany
-from .serializers import CoachSerializer, RouteSerializer, BusCompanySerializer
+from .models import Coach, Route, BusCompany, Delivery
+from .serializers import CoachSerializer, RouteSerializer, BusCompanySerializer, DeliverySerializer, ReviewSerializer
 from rest_framework .decorators import api_view
-
+from rest_framework import  viewsets
+from rest_framework.permissions import IsAuthenticated
 
 class RouteListCreateAPIView(generics.ListCreateAPIView):
     queryset = Route.objects.all()
@@ -15,7 +16,6 @@ class RouteRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Route.objects.all()
     serializer_class = RouteSerializer
     permission_classes = [permissions.IsAdminUser]
-
 class RouteSearchView(generics.ListAPIView):
     serializer_class = RouteSerializer
 
@@ -91,3 +91,23 @@ class BusCompanyUpdateRouteView(generics.UpdateAPIView):
     queryset = Route.objects.all()
     serializer_class = RouteSerializer
 
+class ReviewCreate(generics.CreateAPIView):
+    serializer_class = ReviewSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+class ReviewList(generics.ListAPIView):
+    serializer_class = ReviewSerializer
+
+    def get_queryset(self):
+        bus_company_id = self.kwargs['transport_company_id']
+        return Review.objects.filter(bus_company_id=bus_company_id)
+class DeliveryListCreateView(generics.ListCreateAPIView):
+    queryset = Delivery.objects.all()
+    serializer_class = DeliverySerializer
+
+class DeliveryDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Delivery.objects.all()
+    serializer_class = DeliverySerializer
